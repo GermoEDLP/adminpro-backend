@@ -1,0 +1,1 @@
+module.exports.SEED = 'llave_secreta';
