@@ -7,6 +7,11 @@ var mongoose = require('mongoose');
 var app = express();
 
 
+//Importar rutas
+var appRoutes = require('./routes/app');
+var usuarioRoutes = require('./routes/usuario');
+
+
 //Conexion a base de datos
 mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res) => {
     if(err) throw err;
@@ -16,20 +21,9 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res) =
 
 
 //Rutas
-/*
-Primero la ruta -> '/' es la raiz
-
-res -> es la respuesta que nuestro servidor le va a mandar a cualquier usuario que lo solicite mediante url
-
-*/
-app.get('/', (req, res, next) => {
-
-    res.status(200).json({
-        ok: true,
-        mensaje: 'Servidor corriendo'
-    })
-
-})
+/* Esto es un midleware, me permite decirle a la ruta -> cuando hagas match con la ruta '/', busca el siguiente archivo appRoutes*/
+app.use('/usuario', usuarioRoutes);
+app.use('/', appRoutes);
 
 
 //Escuchar peticiones
